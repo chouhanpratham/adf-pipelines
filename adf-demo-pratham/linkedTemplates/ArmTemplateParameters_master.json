@@ -5,6 +5,21 @@
 		"factoryName": {
 			"value": "adf-demo-pratham"
 		},
+		"AdventureWorksDb_password": {
+			"value": ""
+		},
+		"BlobStorageForProducts_connectionString": {
+			"value": ""
+		},
+		"AdventureWorksDb_properties_typeProperties_server": {
+			"value": "dbpratham.database.windows.net"
+		},
+		"AdventureWorksDb_properties_typeProperties_database": {
+			"value": "adfdatabase"
+		},
+		"AdventureWorksDb_properties_typeProperties_userName": {
+			"value": "PrathamChouhan"
+		},
 		"containerUri": {
 			"value": ""
 		},
