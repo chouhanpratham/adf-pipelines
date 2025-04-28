@@ -11,6 +11,12 @@
 		"BlobStorageForProducts_connectionString": {
 			"value": ""
 		},
+		"CustomerBlobStorage_connectionString": {
+			"value": ""
+		},
+		"BlobStorageforCustomer_connectionString": {
+			"value": ""
+		},
 		"AdventureWorksDb_properties_typeProperties_server": {
 			"value": "dbpratham.database.windows.net"
 		},
