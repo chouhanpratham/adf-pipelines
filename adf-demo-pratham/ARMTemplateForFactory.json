@@ -490,6 +490,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
+						"fileName": "CustomerList.json",
 						"container": "customers"
 					}
 				},
