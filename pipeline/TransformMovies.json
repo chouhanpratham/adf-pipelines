@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "DataFlow1",
+				"name": "TransformMovies",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
