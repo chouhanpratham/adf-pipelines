@@ -11,10 +11,10 @@
 		"BlobStorageForProducts_connectionString": {
 			"value": ""
 		},
-		"CustomerBlobStorage_connectionString": {
+		"BlobStorageforCustomer_connectionString": {
 			"value": ""
 		},
-		"BlobStorageforCustomer_connectionString": {
+		"CustomerBlobStorage_connectionString": {
 			"value": ""
 		},
 		"AdventureWorksDb_properties_typeProperties_server": {

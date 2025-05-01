@@ -15,13 +15,13 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'BlobStorageForProducts'"
 		},
-		"CustomerBlobStorage_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'CustomerBlobStorage'"
-		},
 		"BlobStorageforCustomer_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'BlobStorageforCustomer'"
+		},
+		"CustomerBlobStorage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'CustomerBlobStorage'"
 		},
 		"AdventureWorksDb_properties_typeProperties_server": {
 			"type": "string",
@@ -68,11 +68,11 @@
 					"BlobStorageForProducts_connectionString": {
 						"value": "[parameters('BlobStorageForProducts_connectionString')]"
 					},
-					"CustomerBlobStorage_connectionString": {
-						"value": "[parameters('CustomerBlobStorage_connectionString')]"
-					},
 					"BlobStorageforCustomer_connectionString": {
 						"value": "[parameters('BlobStorageforCustomer_connectionString')]"
+					},
+					"CustomerBlobStorage_connectionString": {
+						"value": "[parameters('CustomerBlobStorage_connectionString')]"
 					},
 					"AdventureWorksDb_properties_typeProperties_server": {
 						"value": "[parameters('AdventureWorksDb_properties_typeProperties_server')]"
