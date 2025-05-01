@@ -23,6 +23,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'CustomerBlobStorage'"
 		},
+		"AzureBlobStorage1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
+		},
 		"AdventureWorksDb_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "dbpratham.database.windows.net"
@@ -73,6 +77,9 @@
 					},
 					"CustomerBlobStorage_connectionString": {
 						"value": "[parameters('CustomerBlobStorage_connectionString')]"
+					},
+					"AzureBlobStorage1_connectionString": {
+						"value": "[parameters('AzureBlobStorage1_connectionString')]"
 					},
 					"AdventureWorksDb_properties_typeProperties_server": {
 						"value": "[parameters('AdventureWorksDb_properties_typeProperties_server')]"
