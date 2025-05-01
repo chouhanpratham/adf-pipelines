@@ -52,7 +52,7 @@
 				]
 			},
 			{
-				"name": "UpdateDateSP",
+				"name": "SP Update ModifyDate",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
