@@ -5,6 +5,9 @@
 		"factoryName": {
 			"value": "adf-demo-pratham"
 		},
+		"ADLSGen2_accountKey": {
+			"value": ""
+		},
 		"AdventureWorksDb_password": {
 			"value": ""
 		},
@@ -23,8 +26,20 @@
 		"CustomerBlobStorage_connectionString": {
 			"value": ""
 		},
-		"ADLSGen2_accountKey": {
+		"TaxiSqlDatabase_password": {
 			"value": ""
+		},
+		"TaxiBlobStorage_connectionString": {
+			"value": ""
+		},
+		"TaxiBlob_connectionString": {
+			"value": ""
+		},
+		"TaxiDataLakeStorage_accountKey": {
+			"value": ""
+		},
+		"ADLSGen2_properties_typeProperties_url": {
+			"value": "https://satutorialtransform.dfs.core.windows.net/"
 		},
 		"AdventureWorksDb_properties_typeProperties_server": {
 			"value": "dbpratham.database.windows.net"
@@ -35,7 +50,16 @@
 		"AdventureWorksDb_properties_typeProperties_userName": {
 			"value": "PrathamChouhan"
 		},
-		"ADLSGen2_properties_typeProperties_url": {
+		"TaxiSqlDatabase_properties_typeProperties_server": {
+			"value": "dbpratham.database.windows.net"
+		},
+		"TaxiSqlDatabase_properties_typeProperties_database": {
+			"value": "taxi-data"
+		},
+		"TaxiSqlDatabase_properties_typeProperties_userName": {
+			"value": "PrathamChouhan"
+		},
+		"TaxiDataLakeStorage_properties_typeProperties_url": {
 			"value": "https://satutorialtransform.dfs.core.windows.net/"
 		},
 		"containerUri": {

@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adf-demo-pratham"
 		},
+		"ADLSGen2_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ADLSGen2'"
+		},
 		"AdventureWorksDb_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'AdventureWorksDb'"
@@ -31,9 +35,25 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'CustomerBlobStorage'"
 		},
-		"ADLSGen2_accountKey": {
+		"TaxiSqlDatabase_password": {
 			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'ADLSGen2'"
+			"metadata": "Secure string for 'password' of 'TaxiSqlDatabase'"
+		},
+		"TaxiBlobStorage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'TaxiBlobStorage'"
+		},
+		"TaxiBlob_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'TaxiBlob'"
+		},
+		"TaxiDataLakeStorage_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'TaxiDataLakeStorage'"
+		},
+		"ADLSGen2_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://satutorialtransform.dfs.core.windows.net/"
 		},
 		"AdventureWorksDb_properties_typeProperties_server": {
 			"type": "string",
@@ -47,7 +67,19 @@
 			"type": "string",
 			"defaultValue": "PrathamChouhan"
 		},
-		"ADLSGen2_properties_typeProperties_url": {
+		"TaxiSqlDatabase_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "dbpratham.database.windows.net"
+		},
+		"TaxiSqlDatabase_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "taxi-data"
+		},
+		"TaxiSqlDatabase_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "PrathamChouhan"
+		},
+		"TaxiDataLakeStorage_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://satutorialtransform.dfs.core.windows.net/"
 		},
@@ -78,6 +110,9 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"ADLSGen2_accountKey": {
+						"value": "[parameters('ADLSGen2_accountKey')]"
+					},
 					"AdventureWorksDb_password": {
 						"value": "[parameters('AdventureWorksDb_password')]"
 					},
@@ -96,8 +131,20 @@
 					"CustomerBlobStorage_connectionString": {
 						"value": "[parameters('CustomerBlobStorage_connectionString')]"
 					},
-					"ADLSGen2_accountKey": {
-						"value": "[parameters('ADLSGen2_accountKey')]"
+					"TaxiSqlDatabase_password": {
+						"value": "[parameters('TaxiSqlDatabase_password')]"
+					},
+					"TaxiBlobStorage_connectionString": {
+						"value": "[parameters('TaxiBlobStorage_connectionString')]"
+					},
+					"TaxiBlob_connectionString": {
+						"value": "[parameters('TaxiBlob_connectionString')]"
+					},
+					"TaxiDataLakeStorage_accountKey": {
+						"value": "[parameters('TaxiDataLakeStorage_accountKey')]"
+					},
+					"ADLSGen2_properties_typeProperties_url": {
+						"value": "[parameters('ADLSGen2_properties_typeProperties_url')]"
 					},
 					"AdventureWorksDb_properties_typeProperties_server": {
 						"value": "[parameters('AdventureWorksDb_properties_typeProperties_server')]"
@@ -108,8 +155,17 @@
 					"AdventureWorksDb_properties_typeProperties_userName": {
 						"value": "[parameters('AdventureWorksDb_properties_typeProperties_userName')]"
 					},
-					"ADLSGen2_properties_typeProperties_url": {
-						"value": "[parameters('ADLSGen2_properties_typeProperties_url')]"
+					"TaxiSqlDatabase_properties_typeProperties_server": {
+						"value": "[parameters('TaxiSqlDatabase_properties_typeProperties_server')]"
+					},
+					"TaxiSqlDatabase_properties_typeProperties_database": {
+						"value": "[parameters('TaxiSqlDatabase_properties_typeProperties_database')]"
+					},
+					"TaxiSqlDatabase_properties_typeProperties_userName": {
+						"value": "[parameters('TaxiSqlDatabase_properties_typeProperties_userName')]"
+					},
+					"TaxiDataLakeStorage_properties_typeProperties_url": {
+						"value": "[parameters('TaxiDataLakeStorage_properties_typeProperties_url')]"
 					}
 				}
 			},
