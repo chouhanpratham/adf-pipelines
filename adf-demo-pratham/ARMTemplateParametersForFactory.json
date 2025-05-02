@@ -38,6 +38,12 @@
 		"TaxiDataLakeStorage_accountKey": {
 			"value": ""
 		},
+		"FaresSqlDatabase_password": {
+			"value": ""
+		},
+		"TaxiSink_connectionString": {
+			"value": ""
+		},
 		"ADLSGen2_properties_typeProperties_url": {
 			"value": "https://satutorialtransform.dfs.core.windows.net/"
 		},
@@ -61,6 +67,15 @@
 		},
 		"TaxiDataLakeStorage_properties_typeProperties_url": {
 			"value": "https://satutorialtransform.dfs.core.windows.net/"
+		},
+		"FaresSqlDatabase_properties_typeProperties_server": {
+			"value": "dbpratham.database.windows.net"
+		},
+		"FaresSqlDatabase_properties_typeProperties_database": {
+			"value": "taxi-data"
+		},
+		"FaresSqlDatabase_properties_typeProperties_userName": {
+			"value": "PrathamChouhan"
 		}
 	}
 }

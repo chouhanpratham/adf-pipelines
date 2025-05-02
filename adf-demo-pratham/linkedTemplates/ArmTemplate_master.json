@@ -51,6 +51,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'TaxiDataLakeStorage'"
 		},
+		"FaresSqlDatabase_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'FaresSqlDatabase'"
+		},
+		"TaxiSink_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'TaxiSink'"
+		},
 		"ADLSGen2_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://satutorialtransform.dfs.core.windows.net/"
@@ -82,6 +90,18 @@
 		"TaxiDataLakeStorage_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://satutorialtransform.dfs.core.windows.net/"
+		},
+		"FaresSqlDatabase_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "dbpratham.database.windows.net"
+		},
+		"FaresSqlDatabase_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "taxi-data"
+		},
+		"FaresSqlDatabase_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "PrathamChouhan"
 		},
 		"containerUri": {
 			"type": "string",
@@ -143,6 +163,12 @@
 					"TaxiDataLakeStorage_accountKey": {
 						"value": "[parameters('TaxiDataLakeStorage_accountKey')]"
 					},
+					"FaresSqlDatabase_password": {
+						"value": "[parameters('FaresSqlDatabase_password')]"
+					},
+					"TaxiSink_connectionString": {
+						"value": "[parameters('TaxiSink_connectionString')]"
+					},
 					"ADLSGen2_properties_typeProperties_url": {
 						"value": "[parameters('ADLSGen2_properties_typeProperties_url')]"
 					},
@@ -166,6 +192,15 @@
 					},
 					"TaxiDataLakeStorage_properties_typeProperties_url": {
 						"value": "[parameters('TaxiDataLakeStorage_properties_typeProperties_url')]"
+					},
+					"FaresSqlDatabase_properties_typeProperties_server": {
+						"value": "[parameters('FaresSqlDatabase_properties_typeProperties_server')]"
+					},
+					"FaresSqlDatabase_properties_typeProperties_database": {
+						"value": "[parameters('FaresSqlDatabase_properties_typeProperties_database')]"
+					},
+					"FaresSqlDatabase_properties_typeProperties_userName": {
+						"value": "[parameters('FaresSqlDatabase_properties_typeProperties_userName')]"
 					}
 				}
 			},
