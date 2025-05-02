@@ -1,0 +1,23 @@
+{
+	"name": "TaxiDatacsv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TaxiBlob",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "TripData.csv",
+				"container": "taxi-data"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
