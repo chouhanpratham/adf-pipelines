@@ -35,6 +35,12 @@
 		"FaresSqlDatabase_password": {
 			"value": ""
 		},
+		"FlipkartBlobStorage_connectionString": {
+			"value": ""
+		},
+		"FlipkartStorageSink_connectionString": {
+			"value": ""
+		},
 		"TaxiBlob_connectionString": {
 			"value": ""
 		},

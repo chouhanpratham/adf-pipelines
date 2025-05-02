@@ -47,6 +47,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'FaresSqlDatabase'"
 		},
+		"FlipkartBlobStorage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'FlipkartBlobStorage'"
+		},
+		"FlipkartStorageSink_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'FlipkartStorageSink'"
+		},
 		"TaxiBlob_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'TaxiBlob'"
@@ -179,6 +187,12 @@
 					},
 					"FaresSqlDatabase_password": {
 						"value": "[parameters('FaresSqlDatabase_password')]"
+					},
+					"FlipkartBlobStorage_connectionString": {
+						"value": "[parameters('FlipkartBlobStorage_connectionString')]"
+					},
+					"FlipkartStorageSink_connectionString": {
+						"value": "[parameters('FlipkartStorageSink_connectionString')]"
 					},
 					"TaxiBlob_connectionString": {
 						"value": "[parameters('TaxiBlob_connectionString')]"
