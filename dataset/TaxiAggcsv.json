@@ -1,0 +1,23 @@
+{
+	"name": "TaxiAggcsv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TaxiSink",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "AggregateTaxiData.csv",
+				"container": "taxi-data"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
