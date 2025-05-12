@@ -1,0 +1,23 @@
+{
+	"name": "SalesCSV",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage_Sales",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "SalesLookup.csv",
+				"container": "lookup"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
