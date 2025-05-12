@@ -20,7 +20,16 @@
 		"AzureBlobStorageAssignment1_connectionString": {
 			"value": ""
 		},
+		"AzureBlobStorageSalesAdventure_connectionString": {
+			"value": ""
+		},
+		"AzureBlobStorage_Sales_connectionString": {
+			"value": ""
+		},
 		"AzureSqlDatabaseAssignment1_password": {
+			"value": ""
+		},
+		"AzureSqlDatabase_Sample_password": {
 			"value": ""
 		},
 		"BlobStorageForProducts_connectionString": {
@@ -75,6 +84,15 @@
 			"value": "adfdatabase"
 		},
 		"AzureSqlDatabaseAssignment1_properties_typeProperties_userName": {
+			"value": "PrathamChouhan"
+		},
+		"AzureSqlDatabase_Sample_properties_typeProperties_server": {
+			"value": "dbpratham.database.windows.net"
+		},
+		"AzureSqlDatabase_Sample_properties_typeProperties_database": {
+			"value": "adfdatabase"
+		},
+		"AzureSqlDatabase_Sample_properties_typeProperties_userName": {
 			"value": "PrathamChouhan"
 		},
 		"FaresSqlDatabase_properties_typeProperties_server": {

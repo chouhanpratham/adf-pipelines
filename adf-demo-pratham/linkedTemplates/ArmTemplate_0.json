@@ -27,9 +27,21 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorageAssignment1'"
 		},
+		"AzureBlobStorageSalesAdventure_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorageSalesAdventure'"
+		},
+		"AzureBlobStorage_Sales_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage_Sales'"
+		},
 		"AzureSqlDatabaseAssignment1_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'AzureSqlDatabaseAssignment1'"
+		},
+		"AzureSqlDatabase_Sample_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureSqlDatabase_Sample'"
 		},
 		"BlobStorageForProducts_connectionString": {
 			"type": "secureString",
@@ -71,10 +83,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'TaxiSink'"
 		},
-		"TaxiSqlDatabase_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'TaxiSqlDatabase'"
-		},
 		"ADLSGen2_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://satutorialtransform.dfs.core.windows.net/"
@@ -103,6 +111,18 @@
 			"type": "string",
 			"defaultValue": "PrathamChouhan"
 		},
+		"AzureSqlDatabase_Sample_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "dbpratham.database.windows.net"
+		},
+		"AzureSqlDatabase_Sample_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "adfdatabase"
+		},
+		"AzureSqlDatabase_Sample_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "PrathamChouhan"
+		},
 		"FaresSqlDatabase_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "dbpratham.database.windows.net"
@@ -118,18 +138,6 @@
 		"TaxiDataLakeStorage_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://satutorialtransform.dfs.core.windows.net/"
-		},
-		"TaxiSqlDatabase_properties_typeProperties_server": {
-			"type": "string",
-			"defaultValue": "dbpratham.database.windows.net"
-		},
-		"TaxiSqlDatabase_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "taxi-data"
-		},
-		"TaxiSqlDatabase_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "PrathamChouhan"
 		}
 	},
 	"variables": {
@@ -247,6 +255,32 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorageSalesAdventure')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorageSalesAdventure_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage_Sales')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorage_Sales_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabaseAssignment1')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -263,6 +297,28 @@
 					"password": {
 						"type": "SecureString",
 						"value": "[parameters('AzureSqlDatabaseAssignment1_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase_Sample')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('AzureSqlDatabase_Sample_properties_typeProperties_server')]",
+					"database": "[parameters('AzureSqlDatabase_Sample_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('AzureSqlDatabase_Sample_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('AzureSqlDatabase_Sample_password')]"
 					}
 				}
 			},
@@ -410,137 +466,6 @@
 				}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/TaxiSqlDatabase')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"server": "[parameters('TaxiSqlDatabase_properties_typeProperties_server')]",
-					"database": "[parameters('TaxiSqlDatabase_properties_typeProperties_database')]",
-					"encrypt": "mandatory",
-					"trustServerCertificate": false,
-					"authenticationType": "SQL",
-					"userName": "[parameters('TaxiSqlDatabase_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('TaxiSqlDatabase_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CustomerJson')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "BlobStorageforCustomer",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Json",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "CustomerList.json",
-						"container": "customers"
-					}
-				},
-				"schema": {}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/BlobStorageforCustomer')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CustomersTable')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AdventureWorksDb",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "CustomerID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "NameStyle",
-						"type": "bit"
-					},
-					{
-						"name": "Title",
-						"type": "nvarchar"
-					},
-					{
-						"name": "FirstName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "MiddleName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "LastName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Suffix",
-						"type": "nvarchar"
-					},
-					{
-						"name": "CompanyName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SalesPerson",
-						"type": "nvarchar"
-					},
-					{
-						"name": "EmailAddress",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Phone",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PasswordHash",
-						"type": "varchar"
-					},
-					{
-						"name": "PasswordSalt",
-						"type": "varchar"
-					},
-					{
-						"name": "rowguid",
-						"type": "uniqueidentifier"
-					},
-					{
-						"name": "ModifiedDate",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "SalesLT",
-					"table": "Customer"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AdventureWorksDb')]"
-			]
 		}
 	]
 }

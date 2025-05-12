@@ -27,9 +27,21 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorageAssignment1'"
 		},
+		"AzureBlobStorageSalesAdventure_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorageSalesAdventure'"
+		},
+		"AzureBlobStorage_Sales_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage_Sales'"
+		},
 		"AzureSqlDatabaseAssignment1_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'AzureSqlDatabaseAssignment1'"
+		},
+		"AzureSqlDatabase_Sample_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureSqlDatabase_Sample'"
 		},
 		"BlobStorageForProducts_connectionString": {
 			"type": "secureString",
@@ -103,6 +115,18 @@
 			"type": "string",
 			"defaultValue": "PrathamChouhan"
 		},
+		"AzureSqlDatabase_Sample_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "dbpratham.database.windows.net"
+		},
+		"AzureSqlDatabase_Sample_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "adfdatabase"
+		},
+		"AzureSqlDatabase_Sample_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "PrathamChouhan"
+		},
 		"FaresSqlDatabase_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "dbpratham.database.windows.net"
@@ -173,8 +197,17 @@
 					"AzureBlobStorageAssignment1_connectionString": {
 						"value": "[parameters('AzureBlobStorageAssignment1_connectionString')]"
 					},
+					"AzureBlobStorageSalesAdventure_connectionString": {
+						"value": "[parameters('AzureBlobStorageSalesAdventure_connectionString')]"
+					},
+					"AzureBlobStorage_Sales_connectionString": {
+						"value": "[parameters('AzureBlobStorage_Sales_connectionString')]"
+					},
 					"AzureSqlDatabaseAssignment1_password": {
 						"value": "[parameters('AzureSqlDatabaseAssignment1_password')]"
+					},
+					"AzureSqlDatabase_Sample_password": {
+						"value": "[parameters('AzureSqlDatabase_Sample_password')]"
 					},
 					"BlobStorageForProducts_connectionString": {
 						"value": "[parameters('BlobStorageForProducts_connectionString')]"
@@ -206,9 +239,6 @@
 					"TaxiSink_connectionString": {
 						"value": "[parameters('TaxiSink_connectionString')]"
 					},
-					"TaxiSqlDatabase_password": {
-						"value": "[parameters('TaxiSqlDatabase_password')]"
-					},
 					"ADLSGen2_properties_typeProperties_url": {
 						"value": "[parameters('ADLSGen2_properties_typeProperties_url')]"
 					},
@@ -230,6 +260,15 @@
 					"AzureSqlDatabaseAssignment1_properties_typeProperties_userName": {
 						"value": "[parameters('AzureSqlDatabaseAssignment1_properties_typeProperties_userName')]"
 					},
+					"AzureSqlDatabase_Sample_properties_typeProperties_server": {
+						"value": "[parameters('AzureSqlDatabase_Sample_properties_typeProperties_server')]"
+					},
+					"AzureSqlDatabase_Sample_properties_typeProperties_database": {
+						"value": "[parameters('AzureSqlDatabase_Sample_properties_typeProperties_database')]"
+					},
+					"AzureSqlDatabase_Sample_properties_typeProperties_userName": {
+						"value": "[parameters('AzureSqlDatabase_Sample_properties_typeProperties_userName')]"
+					},
 					"FaresSqlDatabase_properties_typeProperties_server": {
 						"value": "[parameters('FaresSqlDatabase_properties_typeProperties_server')]"
 					},
@@ -241,15 +280,6 @@
 					},
 					"TaxiDataLakeStorage_properties_typeProperties_url": {
 						"value": "[parameters('TaxiDataLakeStorage_properties_typeProperties_url')]"
-					},
-					"TaxiSqlDatabase_properties_typeProperties_server": {
-						"value": "[parameters('TaxiSqlDatabase_properties_typeProperties_server')]"
-					},
-					"TaxiSqlDatabase_properties_typeProperties_database": {
-						"value": "[parameters('TaxiSqlDatabase_properties_typeProperties_database')]"
-					},
-					"TaxiSqlDatabase_properties_typeProperties_userName": {
-						"value": "[parameters('TaxiSqlDatabase_properties_typeProperties_userName')]"
 					}
 				}
 			},
@@ -268,6 +298,18 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"TaxiSqlDatabase_password": {
+						"value": "[parameters('TaxiSqlDatabase_password')]"
+					},
+					"TaxiSqlDatabase_properties_typeProperties_server": {
+						"value": "[parameters('TaxiSqlDatabase_properties_typeProperties_server')]"
+					},
+					"TaxiSqlDatabase_properties_typeProperties_database": {
+						"value": "[parameters('TaxiSqlDatabase_properties_typeProperties_database')]"
+					},
+					"TaxiSqlDatabase_properties_typeProperties_userName": {
+						"value": "[parameters('TaxiSqlDatabase_properties_typeProperties_userName')]"
 					}
 				}
 			},
