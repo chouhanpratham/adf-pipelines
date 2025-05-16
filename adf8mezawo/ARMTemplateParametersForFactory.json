@@ -80,6 +80,9 @@
 		"AdventureWorksDb_properties_typeProperties_userName": {
 			"value": "PrathamChouhan"
 		},
+		"AzureDatabricks_properties_typeProperties_existingClusterId": {
+			"value": "0516-042254-jwfpoje"
+		},
 		"AzureSqlDatabaseAssignment1_properties_typeProperties_server": {
 			"value": "dbpratham.database.windows.net"
 		},

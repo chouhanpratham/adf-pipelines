@@ -107,6 +107,10 @@
 			"type": "string",
 			"defaultValue": "PrathamChouhan"
 		},
+		"AzureDatabricks_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0516-042254-jwfpoje"
+		},
 		"AzureSqlDatabaseAssignment1_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "dbpratham.database.windows.net"
@@ -254,6 +258,9 @@
 					},
 					"AdventureWorksDb_properties_typeProperties_userName": {
 						"value": "[parameters('AdventureWorksDb_properties_typeProperties_userName')]"
+					},
+					"AzureDatabricks_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('AzureDatabricks_properties_typeProperties_existingClusterId')]"
 					},
 					"AzureSqlDatabaseAssignment1_properties_typeProperties_server": {
 						"value": "[parameters('AzureSqlDatabaseAssignment1_properties_typeProperties_server')]"

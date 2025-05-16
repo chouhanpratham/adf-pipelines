@@ -99,6 +99,10 @@
 			"type": "string",
 			"defaultValue": "PrathamChouhan"
 		},
+		"AzureDatabricks_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0516-042254-jwfpoje"
+		},
 		"AzureSqlDatabaseAssignment1_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "dbpratham.database.windows.net"
@@ -293,11 +297,7 @@
 						"type": "SecureString",
 						"value": "[parameters('AzureDatabricks_accessToken')]"
 					},
-					"newClusterNodeType": "Standard_F4",
-					"newClusterNumOfWorker": "1",
-					"newClusterVersion": "11.3.x-scala2.12",
-					"clusterOption": "Fixed",
-					"newClusterInitScripts": []
+					"existingClusterId": "[parameters('AzureDatabricks_properties_typeProperties_existingClusterId')]"
 				}
 			},
 			"dependsOn": []
