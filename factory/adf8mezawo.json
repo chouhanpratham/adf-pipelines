@@ -1,0 +1,9 @@
+{
+	"name": "adf8mezawo",
+	"location": "ukwest",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "96d0d692-725a-4e8a-b070-d74e793a0f57",
+		"tenantId": "5540d248-272b-417f-989d-4df3e5869370"
+	}
+}
