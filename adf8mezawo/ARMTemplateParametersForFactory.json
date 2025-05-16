@@ -1,0 +1,123 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adf8mezawo"
+		},
+		"ADLSGen2_accountKey": {
+			"value": ""
+		},
+		"AdventureWorksDb_password": {
+			"value": ""
+		},
+		"AzureBlobStorage1_connectionString": {
+			"value": ""
+		},
+		"AzureBlobStorage2_connectionString": {
+			"value": ""
+		},
+		"AzureBlobStorageAssignment1_connectionString": {
+			"value": ""
+		},
+		"AzureBlobStorageSalesAdventure_connectionString": {
+			"value": ""
+		},
+		"AzureBlobStorage_Sales_connectionString": {
+			"value": ""
+		},
+		"AzureDatabricks_accessToken": {
+			"value": ""
+		},
+		"AzureSqlDatabaseAssignment1_password": {
+			"value": ""
+		},
+		"AzureSqlDatabase_Sample_password": {
+			"value": ""
+		},
+		"BlobStorageForProducts_connectionString": {
+			"value": ""
+		},
+		"BlobStorageforCustomer_connectionString": {
+			"value": ""
+		},
+		"CustomerBlobStorage_connectionString": {
+			"value": ""
+		},
+		"FaresSqlDatabase_password": {
+			"value": ""
+		},
+		"FlipkartBlobStorage_connectionString": {
+			"value": ""
+		},
+		"FlipkartStorageSink_connectionString": {
+			"value": ""
+		},
+		"TaxiBlob_connectionString": {
+			"value": ""
+		},
+		"TaxiBlobStorage_connectionString": {
+			"value": ""
+		},
+		"TaxiDataLakeStorage_accountKey": {
+			"value": ""
+		},
+		"TaxiSink_connectionString": {
+			"value": ""
+		},
+		"TaxiSqlDatabase_password": {
+			"value": ""
+		},
+		"ADLSGen2_properties_typeProperties_url": {
+			"value": "https://satutorialtransform.dfs.core.windows.net/"
+		},
+		"AdventureWorksDb_properties_typeProperties_server": {
+			"value": "dbpratham.database.windows.net"
+		},
+		"AdventureWorksDb_properties_typeProperties_database": {
+			"value": "adfdatabase"
+		},
+		"AdventureWorksDb_properties_typeProperties_userName": {
+			"value": "PrathamChouhan"
+		},
+		"AzureSqlDatabaseAssignment1_properties_typeProperties_server": {
+			"value": "dbpratham.database.windows.net"
+		},
+		"AzureSqlDatabaseAssignment1_properties_typeProperties_database": {
+			"value": "adfdatabase"
+		},
+		"AzureSqlDatabaseAssignment1_properties_typeProperties_userName": {
+			"value": "PrathamChouhan"
+		},
+		"AzureSqlDatabase_Sample_properties_typeProperties_server": {
+			"value": "dbpratham.database.windows.net"
+		},
+		"AzureSqlDatabase_Sample_properties_typeProperties_database": {
+			"value": "adfdatabase"
+		},
+		"AzureSqlDatabase_Sample_properties_typeProperties_userName": {
+			"value": "PrathamChouhan"
+		},
+		"FaresSqlDatabase_properties_typeProperties_server": {
+			"value": "dbpratham.database.windows.net"
+		},
+		"FaresSqlDatabase_properties_typeProperties_database": {
+			"value": "taxi-data"
+		},
+		"FaresSqlDatabase_properties_typeProperties_userName": {
+			"value": "PrathamChouhan"
+		},
+		"TaxiDataLakeStorage_properties_typeProperties_url": {
+			"value": "https://satutorialtransform.dfs.core.windows.net/"
+		},
+		"TaxiSqlDatabase_properties_typeProperties_server": {
+			"value": "dbpratham.database.windows.net"
+		},
+		"TaxiSqlDatabase_properties_typeProperties_database": {
+			"value": "taxi-data"
+		},
+		"TaxiSqlDatabase_properties_typeProperties_userName": {
+			"value": "PrathamChouhan"
+		}
+	}
+}

@@ -1,0 +1,1211 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adf8mezawo"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/TaxiDataLake')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TaxiDataLakeStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "TripData.csv",
+						"fileSystem": "taxi-data"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TaxiDatacsv')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TaxiBlob",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "TripData.csv",
+						"container": "taxi-data"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TaxiSqlTable')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TaxiSqlDatabase",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "medallion",
+						"type": "nvarchar"
+					},
+					{
+						"name": "hack_license",
+						"type": "nvarchar"
+					},
+					{
+						"name": "vendor_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "rate_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "store_and_fwd_flag",
+						"type": "nvarchar"
+					},
+					{
+						"name": "pickup_datetime",
+						"type": "nvarchar"
+					},
+					{
+						"name": "dropoff_datetime",
+						"type": "nvarchar"
+					},
+					{
+						"name": "passenger_count",
+						"type": "nvarchar"
+					},
+					{
+						"name": "trip_time_in_secs",
+						"type": "nvarchar"
+					},
+					{
+						"name": "trip_distance",
+						"type": "nvarchar"
+					},
+					{
+						"name": "pickup_longitude",
+						"type": "nvarchar"
+					},
+					{
+						"name": "pickup_latitude",
+						"type": "nvarchar"
+					},
+					{
+						"name": "dropoff_longitude",
+						"type": "nvarchar"
+					},
+					{
+						"name": "dropoff_latitude",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "TripData"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/2 products db2blob PL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy products",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".csv"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ProductsTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ProductCsvBlob",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/3 customers db2blob PL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy customers",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "CustomersTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "CustomerJson",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/5 Stored Procedure PL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy Products",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "WaitCopy",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "ProductsTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ProductNewJson",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "SP Update ModifyDate",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Copy Products",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[UpdateProducts]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AdventureWorksDb",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "WaitCopy",
+						"type": "Wait",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"waitTimeInSeconds": 1
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyFromBlobToSqlPipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy_u7e",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "adfv2tutorial//inputEmp.txt"
+							},
+							{
+								"name": "Destination",
+								"value": "dbo.emp"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings",
+									"skipLineCount": 0
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink"
+							},
+							"enableStaging": false,
+							"validateDataConsistency": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "FirstName",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "FirstName",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "LastName",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "LastName",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceDataset_u7e",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DestinationDataset_u7e",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FlipkartDF')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "FlipkartBlob",
+								"type": "DatasetReference"
+							},
+							"name": "FlipkartSourceCSV"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "FlipkartParquet",
+								"type": "DatasetReference"
+							},
+							"name": "FlipkartSinkParquet"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Filter"
+						},
+						{
+							"name": "DerrivedColumn"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          id as string,",
+						"          title as string,",
+						"          Rating as string,",
+						"          maincateg as string,",
+						"          platform as string,",
+						"          actprice1 as string,",
+						"          norating1 as string,",
+						"          noreviews1 as string,",
+						"          star_5f as string,",
+						"          star_4f as string,",
+						"          star_3f as string,",
+						"          star_2f as string,",
+						"          star_1f as string,",
+						"          fulfilled1 as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> FlipkartSourceCSV",
+						"FlipkartSourceCSV filter(toInteger(norating1) < 10 || (toInteger(noreviews1) < 10)) ~> Filter",
+						"Filter derive(positive_review_ratio = toInteger(star_5f) / toInteger(norating1),",
+						"          total_stars = toInteger(star_1f) + toInteger(star_2f) + toInteger(star_3f) + toInteger(star_4f) + toInteger(star_5f)) ~> DerrivedColumn",
+						"DerrivedColumn sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     format: 'parquet',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> FlipkartSinkParquet"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TransformMovies')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "MoviesDB",
+								"type": "DatasetReference"
+							},
+							"name": "MoviesDB"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "MoviesSink",
+								"type": "DatasetReference"
+							},
+							"name": "Sink"
+						}
+					],
+					"transformations": [
+						{
+							"name": "FilterYears"
+						},
+						{
+							"name": "AggregateComedyRatings"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          movie as string,",
+						"          title as string,",
+						"          genres as string,",
+						"          year as string,",
+						"          Rating as string,",
+						"          {Rotton Tomato} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> MoviesDB",
+						"MoviesDB filter(toInteger(year) >= 1910 && toInteger(year) <= 2000 && rlike(genres, 'Comedy')) ~> FilterYears",
+						"FilterYears aggregate(groupBy(year),",
+						"     AverageComedyRating = avg(toInteger(Rating))) ~> AggregateComedyRatings",
+						"AggregateComedyRatings sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          movie as string,",
+						"          title as string,",
+						"          genres as string,",
+						"          year as string,",
+						"          Rating as string,",
+						"          {Rotton Tomato} as string",
+						"     ),",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> Sink"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dbProductsMarkup')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ProductsTable",
+								"type": "DatasetReference"
+							},
+							"name": "ProductStream"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "ProductJson",
+								"type": "DatasetReference"
+							},
+							"name": "SinkBlob"
+						}
+					],
+					"transformations": [
+						{
+							"name": "CalculatedMarkup"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          ProductID as integer,",
+						"          Name as string,",
+						"          ProductNumber as string,",
+						"          Color as string,",
+						"          StandardCost as decimal(19,4),",
+						"          ListPrice as decimal(19,4),",
+						"          Size as string,",
+						"          Weight as decimal(8,2),",
+						"          ProductCategoryID as integer,",
+						"          ProductModelID as integer,",
+						"          SellStartDate as timestamp,",
+						"          SellEndDate as timestamp,",
+						"          DiscontinuedDate as timestamp,",
+						"          ThumbNailPhoto as binary,",
+						"          ThumbnailPhotoFileName as string,",
+						"          rowguid as string,",
+						"          ModifiedDate as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> ProductStream",
+						"ProductStream derive(Markup = ListPrice / StandardCost) ~> CalculatedMarkup",
+						"CalculatedMarkup sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     mapColumn(",
+						"          ProductID,",
+						"          Name,",
+						"          ProductNumber,",
+						"          Color,",
+						"          StandardCost,",
+						"          ListPrice,",
+						"          Size,",
+						"          Weight,",
+						"          ProductCategoryID,",
+						"          ProductModelID,",
+						"          SellStartDate,",
+						"          SellEndDate,",
+						"          DiscontinuedDate,",
+						"          ModifiedDate,",
+						"          Markup",
+						"     )) ~> SinkBlob"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dfLookup')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTable_SalesOrderHeader",
+								"type": "DatasetReference"
+							},
+							"name": "SalesOrderStream"
+						},
+						{
+							"dataset": {
+								"referenceName": "CustomerTable",
+								"type": "DatasetReference"
+							},
+							"name": "CustomerStream"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "SalesCSV",
+								"type": "DatasetReference"
+							},
+							"name": "sinkSales"
+						}
+					],
+					"transformations": [
+						{
+							"name": "lookup1"
+						},
+						{
+							"name": "SalesColumn"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          SalesOrderID as integer,",
+						"          RevisionNumber as integer,",
+						"          OrderDate as timestamp,",
+						"          DueDate as timestamp,",
+						"          ShipDate as timestamp,",
+						"          Status as integer,",
+						"          OnlineOrderFlag as boolean,",
+						"          SalesOrderNumber as string,",
+						"          PurchaseOrderNumber as string,",
+						"          AccountNumber as string,",
+						"          CustomerID as integer,",
+						"          ShipToAddressID as integer,",
+						"          BillToAddressID as integer,",
+						"          ShipMethod as string,",
+						"          CreditCardApprovalCode as string,",
+						"          SubTotal as decimal(19,4),",
+						"          TaxAmt as decimal(19,4),",
+						"          Freight as decimal(19,4),",
+						"          TotalDue as decimal(19,4),",
+						"          Comment as string,",
+						"          rowguid as string,",
+						"          ModifiedDate as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> SalesOrderStream",
+						"source(output(",
+						"          CustomerID as integer,",
+						"          NameStyle as boolean,",
+						"          Title as string,",
+						"          FirstName as string,",
+						"          MiddleName as string,",
+						"          LastName as string,",
+						"          Suffix as string,",
+						"          CompanyName as string,",
+						"          SalesPerson as string,",
+						"          EmailAddress as string,",
+						"          Phone as string,",
+						"          PasswordHash as string,",
+						"          PasswordSalt as string,",
+						"          rowguid as string,",
+						"          ModifiedDate as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> CustomerStream",
+						"SalesOrderStream, CustomerStream lookup(SalesOrderStream@CustomerID == CustomerStream@CustomerID,",
+						"     multiple: false,",
+						"     pickup: 'any',",
+						"     broadcast: 'auto')~> lookup1",
+						"lookup1 select(mapColumn(",
+						"          SalesOrderID,",
+						"          OrderDate,",
+						"          Status,",
+						"          SalesOrderNumber,",
+						"          PurchaseOrderNumber,",
+						"          AccountNumber,",
+						"          CustomerID = SalesOrderStream@CustomerID,",
+						"          SubTotal,",
+						"          TaxAmt,",
+						"          Freight,",
+						"          TotalDue,",
+						"          CustomerID = CustomerStream@CustomerID,",
+						"          NameStyle,",
+						"          Title,",
+						"          FirstName,",
+						"          MiddleName,",
+						"          LastName,",
+						"          CompanyName,",
+						"          SalesPerson,",
+						"          EmailAddress,",
+						"          Phone",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> SalesColumn",
+						"SalesColumn sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sinkSales"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dfTripData')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "TaxiDataLake",
+								"type": "DatasetReference"
+							},
+							"name": "TripDatacsv"
+						},
+						{
+							"dataset": {
+								"referenceName": "FaresSqlTable",
+								"type": "DatasetReference"
+							},
+							"name": "TripFaresTable"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "TaxiAggcsv",
+								"type": "DatasetReference"
+							},
+							"name": "TripAggregateSink"
+						}
+					],
+					"transformations": [
+						{
+							"name": "InnerJoinTripFare"
+						},
+						{
+							"name": "AggregateByPayType"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          medallion as string,",
+						"          hack_license as string,",
+						"          vendor_id as string,",
+						"          rate_code as short,",
+						"          store_and_fwd_flag as boolean,",
+						"          pickup_datetime as timestamp,",
+						"          dropoff_datetime as timestamp,",
+						"          passenger_count as short,",
+						"          trip_time_in_secs as short,",
+						"          trip_distance as double,",
+						"          pickup_longitude as double,",
+						"          pickup_latitude as double,",
+						"          dropoff_longitude as double,",
+						"          dropoff_latitude as double",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> TripDatacsv",
+						"source(output(",
+						"          medallion as string,",
+						"          hack_license as string,",
+						"          vendor_id as string,",
+						"          pickup_datetime as string,",
+						"          payment_type as string,",
+						"          fare_amount as string,",
+						"          surcharge as string,",
+						"          mta_tax as string,",
+						"          tip_amount as string,",
+						"          tolls_amount as string,",
+						"          total_amount as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> TripFaresTable",
+						"TripDatacsv, TripFaresTable join(TripDatacsv@medallion == TripFaresTable@medallion",
+						"     && TripDatacsv@hack_license == TripFaresTable@hack_license",
+						"     && TripDatacsv@vendor_id == TripFaresTable@vendor_id",
+						"     && TripDatacsv@pickup_datetime == toTimestamp(TripFaresTable@pickup_datetime),",
+						"     joinType:'inner',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> InnerJoinTripFare",
+						"InnerJoinTripFare aggregate(groupBy(payment_type),",
+						"     Average_fare = avg(toInteger(total_amount)),",
+						"          Total_trp_distance = sum(trip_distance)) ~> AggregateByPayType",
+						"AggregateByPayType sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> TripAggregateSink"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/TaxiDataLake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/4 ProductsMarkupPL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "dfProductMarkup",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dbProductsMarkup",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"ProductStream": {},
+									"SinkBlob": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dbProductsMarkup')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/6 Taxi Trip PL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "CopyTripData",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".csv"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "TaxiSqlTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "TaxiDataLake",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "dbAggregate",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "CopyTripData",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dfTripData",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"TripDatacsv": {},
+									"TripFaresTable": {},
+									"TripAggregateSink": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/TaxiSqlTable')]",
+				"[concat(variables('factoryId'), '/datasets/TaxiDataLake')]",
+				"[concat(variables('factoryId'), '/dataflows/dfTripData')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AdvWorks Lookup PL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "dfLookup",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dfLookup",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"SalesOrderStream": {},
+									"CustomerStream": {},
+									"sinkSales": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dfLookup')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Flipkart-Assignment')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow Flipkart",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "FlipkartDF",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"FlipkartSourceCSV": {},
+									"FlipkartSinkParquet": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/FlipkartDF')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TransformMovies')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "TransformMovies",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "TransformMovies",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"MoviesDB": {},
+									"Sink": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/TransformMovies')]"
+			]
+		}
+	]
+}

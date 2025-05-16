@@ -1,0 +1,348 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adf8mezawo"
+		},
+		"ADLSGen2_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ADLSGen2'"
+		},
+		"AdventureWorksDb_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AdventureWorksDb'"
+		},
+		"AzureBlobStorage1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
+		},
+		"AzureBlobStorage2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage2'"
+		},
+		"AzureBlobStorageAssignment1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorageAssignment1'"
+		},
+		"AzureBlobStorageSalesAdventure_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorageSalesAdventure'"
+		},
+		"AzureBlobStorage_Sales_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage_Sales'"
+		},
+		"AzureDatabricks_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks'"
+		},
+		"AzureSqlDatabaseAssignment1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureSqlDatabaseAssignment1'"
+		},
+		"AzureSqlDatabase_Sample_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureSqlDatabase_Sample'"
+		},
+		"BlobStorageForProducts_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'BlobStorageForProducts'"
+		},
+		"BlobStorageforCustomer_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'BlobStorageforCustomer'"
+		},
+		"CustomerBlobStorage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'CustomerBlobStorage'"
+		},
+		"FaresSqlDatabase_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'FaresSqlDatabase'"
+		},
+		"FlipkartBlobStorage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'FlipkartBlobStorage'"
+		},
+		"FlipkartStorageSink_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'FlipkartStorageSink'"
+		},
+		"TaxiBlob_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'TaxiBlob'"
+		},
+		"TaxiBlobStorage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'TaxiBlobStorage'"
+		},
+		"TaxiDataLakeStorage_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'TaxiDataLakeStorage'"
+		},
+		"TaxiSink_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'TaxiSink'"
+		},
+		"TaxiSqlDatabase_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'TaxiSqlDatabase'"
+		},
+		"ADLSGen2_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://satutorialtransform.dfs.core.windows.net/"
+		},
+		"AdventureWorksDb_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "dbpratham.database.windows.net"
+		},
+		"AdventureWorksDb_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "adfdatabase"
+		},
+		"AdventureWorksDb_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "PrathamChouhan"
+		},
+		"AzureSqlDatabaseAssignment1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "dbpratham.database.windows.net"
+		},
+		"AzureSqlDatabaseAssignment1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "adfdatabase"
+		},
+		"AzureSqlDatabaseAssignment1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "PrathamChouhan"
+		},
+		"AzureSqlDatabase_Sample_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "dbpratham.database.windows.net"
+		},
+		"AzureSqlDatabase_Sample_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "adfdatabase"
+		},
+		"AzureSqlDatabase_Sample_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "PrathamChouhan"
+		},
+		"FaresSqlDatabase_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "dbpratham.database.windows.net"
+		},
+		"FaresSqlDatabase_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "taxi-data"
+		},
+		"FaresSqlDatabase_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "PrathamChouhan"
+		},
+		"TaxiDataLakeStorage_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://satutorialtransform.dfs.core.windows.net/"
+		},
+		"TaxiSqlDatabase_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "dbpratham.database.windows.net"
+		},
+		"TaxiSqlDatabase_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "taxi-data"
+		},
+		"TaxiSqlDatabase_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "PrathamChouhan"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "adf8mezawo_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"ADLSGen2_accountKey": {
+						"value": "[parameters('ADLSGen2_accountKey')]"
+					},
+					"AdventureWorksDb_password": {
+						"value": "[parameters('AdventureWorksDb_password')]"
+					},
+					"AzureBlobStorage1_connectionString": {
+						"value": "[parameters('AzureBlobStorage1_connectionString')]"
+					},
+					"AzureBlobStorage2_connectionString": {
+						"value": "[parameters('AzureBlobStorage2_connectionString')]"
+					},
+					"AzureBlobStorageAssignment1_connectionString": {
+						"value": "[parameters('AzureBlobStorageAssignment1_connectionString')]"
+					},
+					"AzureBlobStorageSalesAdventure_connectionString": {
+						"value": "[parameters('AzureBlobStorageSalesAdventure_connectionString')]"
+					},
+					"AzureBlobStorage_Sales_connectionString": {
+						"value": "[parameters('AzureBlobStorage_Sales_connectionString')]"
+					},
+					"AzureDatabricks_accessToken": {
+						"value": "[parameters('AzureDatabricks_accessToken')]"
+					},
+					"AzureSqlDatabaseAssignment1_password": {
+						"value": "[parameters('AzureSqlDatabaseAssignment1_password')]"
+					},
+					"AzureSqlDatabase_Sample_password": {
+						"value": "[parameters('AzureSqlDatabase_Sample_password')]"
+					},
+					"BlobStorageForProducts_connectionString": {
+						"value": "[parameters('BlobStorageForProducts_connectionString')]"
+					},
+					"BlobStorageforCustomer_connectionString": {
+						"value": "[parameters('BlobStorageforCustomer_connectionString')]"
+					},
+					"CustomerBlobStorage_connectionString": {
+						"value": "[parameters('CustomerBlobStorage_connectionString')]"
+					},
+					"FaresSqlDatabase_password": {
+						"value": "[parameters('FaresSqlDatabase_password')]"
+					},
+					"FlipkartBlobStorage_connectionString": {
+						"value": "[parameters('FlipkartBlobStorage_connectionString')]"
+					},
+					"FlipkartStorageSink_connectionString": {
+						"value": "[parameters('FlipkartStorageSink_connectionString')]"
+					},
+					"TaxiBlob_connectionString": {
+						"value": "[parameters('TaxiBlob_connectionString')]"
+					},
+					"TaxiBlobStorage_connectionString": {
+						"value": "[parameters('TaxiBlobStorage_connectionString')]"
+					},
+					"TaxiDataLakeStorage_accountKey": {
+						"value": "[parameters('TaxiDataLakeStorage_accountKey')]"
+					},
+					"ADLSGen2_properties_typeProperties_url": {
+						"value": "[parameters('ADLSGen2_properties_typeProperties_url')]"
+					},
+					"AdventureWorksDb_properties_typeProperties_server": {
+						"value": "[parameters('AdventureWorksDb_properties_typeProperties_server')]"
+					},
+					"AdventureWorksDb_properties_typeProperties_database": {
+						"value": "[parameters('AdventureWorksDb_properties_typeProperties_database')]"
+					},
+					"AdventureWorksDb_properties_typeProperties_userName": {
+						"value": "[parameters('AdventureWorksDb_properties_typeProperties_userName')]"
+					},
+					"AzureSqlDatabaseAssignment1_properties_typeProperties_server": {
+						"value": "[parameters('AzureSqlDatabaseAssignment1_properties_typeProperties_server')]"
+					},
+					"AzureSqlDatabaseAssignment1_properties_typeProperties_database": {
+						"value": "[parameters('AzureSqlDatabaseAssignment1_properties_typeProperties_database')]"
+					},
+					"AzureSqlDatabaseAssignment1_properties_typeProperties_userName": {
+						"value": "[parameters('AzureSqlDatabaseAssignment1_properties_typeProperties_userName')]"
+					},
+					"AzureSqlDatabase_Sample_properties_typeProperties_server": {
+						"value": "[parameters('AzureSqlDatabase_Sample_properties_typeProperties_server')]"
+					},
+					"AzureSqlDatabase_Sample_properties_typeProperties_database": {
+						"value": "[parameters('AzureSqlDatabase_Sample_properties_typeProperties_database')]"
+					},
+					"AzureSqlDatabase_Sample_properties_typeProperties_userName": {
+						"value": "[parameters('AzureSqlDatabase_Sample_properties_typeProperties_userName')]"
+					},
+					"FaresSqlDatabase_properties_typeProperties_server": {
+						"value": "[parameters('FaresSqlDatabase_properties_typeProperties_server')]"
+					},
+					"FaresSqlDatabase_properties_typeProperties_database": {
+						"value": "[parameters('FaresSqlDatabase_properties_typeProperties_database')]"
+					},
+					"FaresSqlDatabase_properties_typeProperties_userName": {
+						"value": "[parameters('FaresSqlDatabase_properties_typeProperties_userName')]"
+					},
+					"TaxiDataLakeStorage_properties_typeProperties_url": {
+						"value": "[parameters('TaxiDataLakeStorage_properties_typeProperties_url')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "adf8mezawo_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"TaxiSink_connectionString": {
+						"value": "[parameters('TaxiSink_connectionString')]"
+					},
+					"TaxiSqlDatabase_password": {
+						"value": "[parameters('TaxiSqlDatabase_password')]"
+					},
+					"TaxiSqlDatabase_properties_typeProperties_server": {
+						"value": "[parameters('TaxiSqlDatabase_properties_typeProperties_server')]"
+					},
+					"TaxiSqlDatabase_properties_typeProperties_database": {
+						"value": "[parameters('TaxiSqlDatabase_properties_typeProperties_database')]"
+					},
+					"TaxiSqlDatabase_properties_typeProperties_userName": {
+						"value": "[parameters('TaxiSqlDatabase_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adf8mezawo_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "adf8mezawo_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adf8mezawo_ArmTemplate_1')]"
+			]
+		}
+	]
+}
