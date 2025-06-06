@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "edusync-logs.json",
+				"fileName": "edited.json",
 				"container": "logs"
 			}
 		},
