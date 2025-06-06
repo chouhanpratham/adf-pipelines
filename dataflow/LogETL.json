@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "LogOutputFile",
+						"referenceName": "OutputSink",
 						"type": "DatasetReference"
 					},
 					"name": "LogOutput"
@@ -63,21 +63,6 @@
 				"     skipDuplicateMapOutputs: true) ~> select1",
 				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     input(",
-				"          {@t} as string,",
-				"          {@mt} as string,",
-				"          MachineName as string,",
-				"          ThreadId as integer,",
-				"          Application as string,",
-				"          {@l} as string,",
-				"          {@tr} as string,",
-				"          {@sp} as string,",
-				"          EventId as (Id as integer, Name as string),",
-				"          SourceContext as string,",
-				"          RequestId as string,",
-				"          RequestPath as string,",
-				"          ConnectionId as string",
-				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> LogOutput"
 			]

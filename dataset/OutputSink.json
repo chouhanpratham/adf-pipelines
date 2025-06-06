@@ -1,0 +1,18 @@
+{
+	"name": "OutputSink",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureLogFile",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "container"
+			}
+		},
+		"schema": {}
+	}
+}
