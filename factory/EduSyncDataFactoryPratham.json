@@ -1,0 +1,9 @@
+{
+	"name": "EduSyncDataFactoryPratham",
+	"location": "eastus2",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "fa38a5c3-5c9a-42eb-9210-3968db1cee52",
+		"tenantId": "5540d248-272b-417f-989d-4df3e5869370"
+	}
+}
