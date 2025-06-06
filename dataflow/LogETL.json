@@ -52,8 +52,6 @@
 				"          MachineName,",
 				"          ThreadId,",
 				"          Application,",
-				"          logLevel = {@l},",
-				"          EventId,",
 				"          SourceContext,",
 				"          RequestId,",
 				"          RequestPath,",
