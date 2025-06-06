@@ -25,14 +25,7 @@
 					{
 						"name": "LogETL",
 						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "Copy data1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
+						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -58,56 +51,6 @@
 							},
 							"traceLevel": "Fine"
 						}
-					},
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "JsonSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "JsonReadSettings"
-								}
-							},
-							"sink": {
-								"type": "JsonSink",
-								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings"
-								},
-								"formatSettings": {
-									"type": "JsonWriteSettings"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "LogJson",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "LogOutputFile",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
 					}
 				],
 				"policy": {
@@ -116,24 +59,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/LogETL')]",
-				"[concat(variables('factoryId'), '/datasets/LogJson')]",
-				"[concat(variables('factoryId'), '/datasets/LogOutputFile')]"
+				"[concat(variables('factoryId'), '/dataflows/LogETL')]"
 			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureLogFile')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "EduSyncProject Log FIle",
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureLogFile_connectionString')]"
-				}
-			},
-			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/LogJson')]",
@@ -211,98 +138,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/LogETL')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "LogJson",
-								"type": "DatasetReference"
-							},
-							"name": "LogInput"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "LogOutputFile",
-								"type": "DatasetReference"
-							},
-							"name": "LogOutput"
-						}
-					],
-					"transformations": [
-						{
-							"name": "select1"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          {@t} as string,",
-						"          {@mt} as string,",
-						"          MachineName as string,",
-						"          ThreadId as integer,",
-						"          Application as string,",
-						"          {@l} as string,",
-						"          {@tr} as string,",
-						"          {@sp} as string,",
-						"          EventId as (Id as integer, Name as string),",
-						"          SourceContext as string,",
-						"          RequestId as string,",
-						"          RequestPath as string,",
-						"          ConnectionId as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false,",
-						"     documentForm: 'documentPerLine') ~> LogInput",
-						"LogInput select(mapColumn(",
-						"          timestamp = {@t},",
-						"          messageTemplate = {@mt},",
-						"          MachineName,",
-						"          ThreadId,",
-						"          Application,",
-						"          logLevel = {@l},",
-						"          EventId,",
-						"          SourceContext,",
-						"          RequestId,",
-						"          RequestPath,",
-						"          ConnectionId",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select1",
-						"select1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          {@t} as string,",
-						"          {@mt} as string,",
-						"          MachineName as string,",
-						"          ThreadId as integer,",
-						"          Application as string,",
-						"          {@l} as string,",
-						"          {@tr} as string,",
-						"          {@sp} as string,",
-						"          EventId as (Id as integer, Name as string),",
-						"          SourceContext as string,",
-						"          RequestId as string,",
-						"          RequestPath as string,",
-						"          ConnectionId as string",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> LogOutput"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/LogJson')]",
-				"[concat(variables('factoryId'), '/datasets/LogOutputFile')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/LogOutputFile')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -375,6 +210,120 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureLogFile')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OutputSink')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureLogFile",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "container"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureLogFile')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureLogFile')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "EduSyncProject Log FIle",
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureLogFile_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LogETL')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "LogJson",
+								"type": "DatasetReference"
+							},
+							"name": "LogInput"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "OutputSink",
+								"type": "DatasetReference"
+							},
+							"name": "LogOutput"
+						}
+					],
+					"transformations": [
+						{
+							"name": "select1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          {@t} as string,",
+						"          {@mt} as string,",
+						"          MachineName as string,",
+						"          ThreadId as integer,",
+						"          Application as string,",
+						"          {@l} as string,",
+						"          {@tr} as string,",
+						"          {@sp} as string,",
+						"          EventId as (Id as integer, Name as string),",
+						"          SourceContext as string,",
+						"          RequestId as string,",
+						"          RequestPath as string,",
+						"          ConnectionId as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     documentForm: 'documentPerLine') ~> LogInput",
+						"LogInput select(mapColumn(",
+						"          timestamp = {@t},",
+						"          messageTemplate = {@mt},",
+						"          MachineName,",
+						"          ThreadId,",
+						"          Application,",
+						"          logLevel = {@l},",
+						"          EventId,",
+						"          SourceContext,",
+						"          RequestId,",
+						"          RequestPath,",
+						"          ConnectionId",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"select1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> LogOutput"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/LogJson')]",
+				"[concat(variables('factoryId'), '/datasets/OutputSink')]"
 			]
 		}
 	]

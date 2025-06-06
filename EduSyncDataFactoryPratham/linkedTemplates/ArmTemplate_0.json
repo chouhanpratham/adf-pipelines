@@ -181,6 +181,29 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/OutputSink')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureLogFile",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "container"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureLogFile')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/LogETL')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -199,7 +222,7 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "LogOutputFile",
+								"referenceName": "OutputSink",
 								"type": "DatasetReference"
 							},
 							"name": "LogOutput"
@@ -247,21 +270,6 @@
 						"     skipDuplicateMapOutputs: true) ~> select1",
 						"select1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     input(",
-						"          {@t} as string,",
-						"          {@mt} as string,",
-						"          MachineName as string,",
-						"          ThreadId as integer,",
-						"          Application as string,",
-						"          {@l} as string,",
-						"          {@tr} as string,",
-						"          {@sp} as string,",
-						"          EventId as (Id as integer, Name as string),",
-						"          SourceContext as string,",
-						"          RequestId as string,",
-						"          RequestPath as string,",
-						"          ConnectionId as string",
-						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> LogOutput"
 					]
@@ -269,7 +277,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/LogJson')]",
-				"[concat(variables('factoryId'), '/datasets/LogOutputFile')]"
+				"[concat(variables('factoryId'), '/datasets/OutputSink')]"
 			]
 		},
 		{
@@ -281,14 +289,7 @@
 					{
 						"name": "LogETL",
 						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "Copy data1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
+						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -314,56 +315,6 @@
 							},
 							"traceLevel": "Fine"
 						}
-					},
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "JsonSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "JsonReadSettings"
-								}
-							},
-							"sink": {
-								"type": "JsonSink",
-								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings"
-								},
-								"formatSettings": {
-									"type": "JsonWriteSettings"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "LogJson",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "LogOutputFile",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
 					}
 				],
 				"policy": {
@@ -372,9 +323,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/LogETL')]",
-				"[concat(variables('factoryId'), '/datasets/LogJson')]",
-				"[concat(variables('factoryId'), '/datasets/LogOutputFile')]"
+				"[concat(variables('factoryId'), '/dataflows/LogETL')]"
 			]
 		}
 	]
