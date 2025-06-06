@@ -44,8 +44,8 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "edited.json",
-						"container": "logs"
+						"fileName": "edusync-logs (3).json",
+						"container": "container"
 					}
 				},
 				"schema": {
@@ -194,6 +194,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
+						"fileName": "edited.json",
 						"container": "container"
 					}
 				},
@@ -259,8 +260,6 @@
 						"          MachineName,",
 						"          ThreadId,",
 						"          Application,",
-						"          logLevel = {@l},",
-						"          EventId,",
 						"          SourceContext,",
 						"          RequestId,",
 						"          RequestPath,",
