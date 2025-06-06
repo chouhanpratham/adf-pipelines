@@ -1,0 +1,69 @@
+{
+	"name": "LogOutputFile",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureLogFile",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "logs"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"@t": {
+					"type": "string"
+				},
+				"@mt": {
+					"type": "string"
+				},
+				"MachineName": {
+					"type": "string"
+				},
+				"ThreadId": {
+					"type": "integer"
+				},
+				"Application": {
+					"type": "string"
+				},
+				"@l": {
+					"type": "string"
+				},
+				"@tr": {
+					"type": "string"
+				},
+				"@sp": {
+					"type": "string"
+				},
+				"EventId": {
+					"type": "object",
+					"properties": {
+						"Id": {
+							"type": "integer"
+						},
+						"Name": {
+							"type": "string"
+						}
+					}
+				},
+				"SourceContext": {
+					"type": "string"
+				},
+				"RequestId": {
+					"type": "string"
+				},
+				"RequestPath": {
+					"type": "string"
+				},
+				"ConnectionId": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}
