@@ -21,7 +21,11 @@
 					"name": "LogOutput"
 				}
 			],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "select1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          {@t} as string,",
@@ -42,7 +46,22 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     documentForm: 'documentPerLine') ~> LogInput",
-				"LogInput sink(allowSchemaDrift: true,",
+				"LogInput select(mapColumn(",
+				"          timestamp = {@t},",
+				"          messageTemplate = {@mt},",
+				"          MachineName,",
+				"          ThreadId,",
+				"          Application,",
+				"          logLevel = {@l},",
+				"          EventId,",
+				"          SourceContext,",
+				"          RequestId,",
+				"          RequestPath,",
+				"          ConnectionId",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          {@t} as string,",
